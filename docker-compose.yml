@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: crmbyte_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: crmbyte
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: crmbyte_user
+      MYSQL_PASSWORD: crmbyte_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - crmbyte_network
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  crmbyte_network:
+    driver: bridge
+
